@@ -4,7 +4,14 @@
 from turtle import *
 
 
-def serpinski(size):
+def serpinski(size: int) -> None:
+    """serpinks(size) -> Results in using Python's turtle module to draw a
+                      Serpinski's Gasket.
+
+    size should be interpreted using binary.  The number of trailing 0 bits
+    represent the number of levels of recursion for the resulting Serpinski's
+    Gasket, and the value as a whole is the length of an edge on the biggest
+    triangle."""
     def serpinski_top(size):
         if size & 1:
             fd(size)
