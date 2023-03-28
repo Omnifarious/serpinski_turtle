@@ -2,6 +2,7 @@
 
 
 from turtle import *
+from math import sqrt
 
 
 def serpinski(size: int) -> None:
@@ -12,7 +13,7 @@ def serpinski(size: int) -> None:
     represent the number of levels of recursion for the resulting Serpinski's
     Gasket, and the value as a whole is the length of an edge on the biggest
     triangle."""
-    def serpinski_top(size):
+    def serpinski_sub(size):
         if size & 1:
             fd(size)
             yield None
@@ -25,9 +26,9 @@ def serpinski(size: int) -> None:
             rt(120)
         else:
             size = size // 2
-            g = serpinski_top(size)
+            g = serpinski_sub(size)
             next(g)
-            h = serpinski_top(size)
+            h = serpinski_sub(size)
             next(h)
             yield None
             next(h)
@@ -38,7 +39,7 @@ def serpinski(size: int) -> None:
             else:
                 assert False
             next(g)
-            h = serpinski_top(size)
+            h = serpinski_sub(size)
             next(h)
             next(h)
             yield None
@@ -55,14 +56,29 @@ def serpinski(size: int) -> None:
             else:
                 assert False
 
-    if size & 1:
-        fd(size)
-        rt(120)
-        fd(size)
-        rt(120)
-        fd(size)
-        rt(120)
-    else:
-        size = size // 2
-        for _ in serpinski_top(size):
-            serpinski(size)
+    def serpinski_top(size):
+        if size & 1:
+            fd(size)
+            rt(120)
+            fd(size)
+            rt(120)
+            fd(size)
+            rt(120)
+        else:
+            size = size // 2
+            for _ in serpinski_sub(size):
+                serpinski_top(size)
+
+    pu()
+    a = 139.10660535086907
+    h = size * sqrt(7) / 4
+    lt(a)
+    fd(h)
+    rt(a)
+    pd()
+    serpinski_top(size)
+    pu()
+    rt(180 - a)
+    fd(h)
+    lt(180 - a)
+    pd()
